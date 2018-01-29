@@ -1,18 +1,19 @@
 {
-  "name": "eslint-import-resolver-babel-root-import",
+  "name": "@unconfident/eslint-import-resolver-babel-plugin-root-import",
   "version": "1.0.0",
   "main": "src/index.js",
-  "description": "babel-plugin-root-import resolver for eslint-plugin-import",
+  "description": "fork of eslint-import-resolver-babel-root-import that works and includes some pull fixes",
   "repository": {
     "type": "git",
-    "url": "https://github.com/olalonde/eslint-import-resolver-babel-root-import.git"
+    "url": "https://github.com/unconfident/eslint-import-resolver-babel-root-import.git"
   },
-  "author": {
-    "name": "Olivier Lalonde",
-    "email": "olalonde@gmail.com",
-    "url": "http://syskall.com"
-  },
+  "author": "unconfident",
   "contributors": [
+    {
+      "name": "Olivier Lalonde",
+      "email": "olalonde@gmail.com",
+      "url": "http://syskall.com"
+    },
     {
       "name": "Christian Le",
       "url": "http://christianle.com"
@@ -65,4 +66,3 @@
     ]
   }
 }
-
