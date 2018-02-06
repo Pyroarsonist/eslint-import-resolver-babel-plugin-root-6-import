@@ -2,7 +2,7 @@
   "name": "@unconfident/eslint-import-resolver-babel-plugin-root-import",
   "version": "1.0.0",
   "main": "src/index.js",
-  "description": "fork of eslint-import-resolver-babel-root-import that works and includes some pull fixes",
+  "description": "fork of eslint-import-resolver-babel-root-import that works",
   "repository": {
     "type": "git",
     "url": "https://github.com/unconfident/eslint-import-resolver-babel-root-import.git"
