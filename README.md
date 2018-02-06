@@ -1,4 +1,4 @@
-# eslint-import-resolver-babel-root-import
+# @unconfident/eslint-import-resolver-babel-plugin-root-import
 
 A [babel-plugin-root-import] resolver for [eslint-plugin-import].
 
@@ -10,20 +10,21 @@ doesn't do a good job.
 ## Installation
 
 ```sh
-npm install --save-dev eslint-plugin-import eslint-import-resolver-babel-root-import
+npm install --save-dev eslint-plugin-import @unconfident/eslint-import-resolver-babel-plugin-root-import
 ```
 
 ## Usage
 
 Inside your `.eslintrc` file, pass this resolver to `eslint-plugin-import`:
-```
+
+```json
 "settings": {
   "import/resolver": "@unconfident/eslint-import-resolver-babel-plugin-root-import"
 }
 ```
 
-And see [babel-plugin-root-import] to know how to configure
-your prefix/suffix.
+And see [babel-plugin-root-import] to know how to configure your prefix/suffix. 
+Configuration will be parsed down from `.babelrc` file 
 
 ### Example
 
