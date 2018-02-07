@@ -1,16 +1,14 @@
-# @unconfident/eslint-import-resolver-babel-plugin-root-import
+# eslint-import-resolver-babel-plugin-root-import
 
 A [babel-plugin-root-import] resolver for [eslint-plugin-import].
 
-:warning: This is a fork of [eslint-import-resolver-babel-root-import] that works with 
-latest version of babel plugin. It will either go away if changes are merged or will be 
-published to npm, because [other fork][eslint-import-resolver-babel-plugin-root-import]
-doesn't do a good job. 
+This is a fork of [eslint-import-resolver-babel-root-import] that works with 
+latest version of babel plugin.
 
 ## Installation
 
 ```sh
-npm install --save-dev eslint-plugin-import @unconfident/eslint-import-resolver-babel-plugin-root-import
+npm install --save-dev eslint-plugin-import eslint-import-resolver-babel-plugin-root-import
 ```
 
 ## Usage
@@ -19,7 +17,7 @@ Inside your `.eslintrc` file, pass this resolver to `eslint-plugin-import`:
 
 ```json
 "settings": {
-  "import/resolver": "@unconfident/eslint-import-resolver-babel-plugin-root-import"
+  "import/resolver": "babel-plugin-root-import"
 }
 ```
 
@@ -34,7 +32,7 @@ Configuration will be parsed down from `.babelrc` file
   "rules": {},
   "settings": {
     "import/resolver": {
-      "@unconfident/eslint-import-resolver-babel-plugin-root-import": {}
+      "babel-plugin-root-import": {}
     }
   }
 }
@@ -48,4 +46,3 @@ MIT, see [LICENSE.md](/LICENSE.md) for details.
 [babel-plugin-root-import]: https://github.com/entwicklerstube/babel-plugin-root-import
 [eslint-plugin-import]: https://github.com/benmosher/eslint-plugin-import
 [eslint-import-resolver-babel-root-import]: https://github.com/olalonde/eslint-import-resolver-babel-root-import
-[eslint-import-resolver-babel-plugin-root-import]: https://github.com/bingqichen/eslint-import-resolver-babel-plugin-root-import
