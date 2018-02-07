@@ -34,6 +34,35 @@ test('Resolves files required from a file deeper in the tree', (t) => {
     t.end();
 });
 
+test('Supports passing aliases directly through eslint import/resolver settings', (t) => {
+    t.deepEqual(
+        resolve('#/file', __filename, [
+            { rootPathPrefix: '@', rootPathSuffix: 'modules' },
+            { rootPathPrefix: '#', rootPathSuffix: 'modules/anotherpath' },
+        ]),
+        expectResolvedTo('modules/anotherpath/file.js'),
+        'Array of objects w/ rootPathPrefix and rootPathSuffix'
+    );
+
+    t.deepEqual(
+        resolve('~/file', __filename, {
+            rootPathSuffix: 'modules/anotherpath'
+        }),
+        expectResolvedTo('modules/anotherpath/file.js'),
+        'Object, only suffix specified'
+    );
+
+    t.deepEqual(
+        resolve('!/modules/file', __filename, {
+            rootPathPrefix: '!'
+        }),
+        expectResolvedTo('modules/file.js'),
+        'Object, only prefix specified'
+    );
+
+    t.end();
+});
+
 test('Correctly resolves default prefix (~/) when no configuration provided', (t) => {
     const result = resolve('~/modules/file', relativeToTestDir('./some/other/file.js'), {}, '.babelrcNoConf');
     const result2 = resolve('~/modules/file', relativeToTestDir('./some/other/file.js'), {}, '.babelrcNoConfArray');
