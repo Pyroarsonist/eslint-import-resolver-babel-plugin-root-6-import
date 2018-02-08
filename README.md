@@ -22,7 +22,7 @@ Inside your `.eslintrc` file, pass this resolver to `eslint-plugin-import`:
 ```
 
 And see [babel-plugin-root-import] to know how to configure your prefix/suffix. 
-Configuration will be parsed down from `.babelrc` file 
+Configuration will be parsed down from `.babelrc` file
 
 ### Example
 
@@ -33,6 +33,24 @@ Configuration will be parsed down from `.babelrc` file
   "settings": {
     "import/resolver": {
       "babel-plugin-root-import": {}
+    }
+  }
+}
+```
+
+Or if you don't use `.babelrc` and keep your babel configuration in, say, webpack
+config you can pass those options to resolver directly through `.eslintrc` file:
+
+```json
+{
+  "extends": "airbnb",
+  "rules": {},
+  "settings": {
+    "import/resolver": {
+      "babel-plugin-root-import": {
+        "rootPathPrefix": "@",
+        "rootPathSuffix": "src/js"
+      }
     }
   }
 }

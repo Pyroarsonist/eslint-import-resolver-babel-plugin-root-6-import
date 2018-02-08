@@ -11,6 +11,10 @@ function isString(value) {
     return typeof value === 'string';
 }
 
+function isObject(value) {
+    return value !== null && typeof value === 'object';
+}
+
 // returns the root import config as an object. Or an array
 function getConfigFromBabel(directory, babelrcName = '.babelrc') {
     const babelrcPath = babelrcName && path.join(directory, babelrcName);
@@ -58,22 +62,30 @@ exports.interfaceVersion = 2;
  * resolveImport('./foo', '/Users/ben/bar.js') => '/Users/ben/foo.js'
  * @param  {string} source - the module to resolve; i.e './some-module'
  * @param  {string} file - the importing file's full path; i.e. '/usr/local/bin/file.js'
- * @param  {object} config - the resolver options
- * @param  {string} babelrc - the name of the babelrc file
+ * @param  {null|object|array} [config] - the resolver options
+ * @param  {string} [babelrc] - the name of the babelrc file
  * @return {object}
  */
-exports.resolve = (source, file, config, babelrc) => {
-    const optionsRaw = getConfigFromBabel(process.cwd(), babelrc);
-    const opts = [].concat(optionsRaw || []);
+exports.resolve = (source, file, config = {}, babelrc = '.babelrc') => {
+    // Consider any array or an object w/ rootPathPrefix or rootPathSuffix key a valid alias configuration
+    const isValidConfiguration = Array.isArray(config) ||
+        isObject(config) && (
+            config.hasOwnProperty('rootPathPrefix') ||
+            config.hasOwnProperty('rootPathSuffix')
+        );
 
-    if (optionsRaw === null) {
-        return nodeResolve(source, file, config);
+    const options = isValidConfiguration ? config : getConfigFromBabel(process.cwd(), babelrc);
+    const optsArray = [].concat(options || []);
+
+    // If parsed config from babel and plugin wasn't listed there
+    if (!isValidConfiguration && options === null) {
+        return nodeResolve(source, file, {});
     }
 
     // This empty object becomes default '~/` prefix mapped to root during the next step
-    if (opts.length === 0) opts.push({});
+    if (optsArray.length === 0) optsArray.push({});
 
-    const rootPathConfig = opts.map((item = {}) => ({
+    const rootPathConfig = optsArray.map((item = {}) => ({
         rootPathPrefix: isString(item.rootPathPrefix) ? item.rootPathPrefix : '~',
         rootPathSuffix: isString(item.rootPathSuffix) ? item.rootPathSuffix.replace(/^(\/)|(\/)$/g, '') : ''
     }));
@@ -94,6 +106,6 @@ exports.resolve = (source, file, config, babelrc) => {
     // Node resolver expects that path would be relative to file, so we have to resolve it first
     transformedSource = path.resolve(transformedSource);
 
-    return nodeResolve(transformedSource, file, config);
+    return nodeResolve(transformedSource, file, {});
 };
 
