@@ -98,13 +98,12 @@ exports.resolve = (source, file, config = {}, babelrc = '.babelrc') => {
 
         if (hasRootPathPrefixInString(source, prefix)) {
             transformedSource = transformRelativeToRootPath(source, suffix, prefix);
+            // Since babel-plugin-root-import 5.0.0 relative path is now actually relative to the root.
+            // Node resolver expects that path would be relative to file, so we have to resolve it first
+            transformedSource = path.resolve(transformedSource);
             break;
         }
     }
-
-    // Since babel-plugin-root-import 5.0.0 relative path is now actually relative to the root.
-    // Node resolver expects that path would be relative to file, so we have to resolve it first
-    transformedSource = path.resolve(transformedSource);
 
     return nodeResolve(transformedSource, file, {});
 };
