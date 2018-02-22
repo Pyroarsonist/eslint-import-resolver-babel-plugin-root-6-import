@@ -125,6 +125,66 @@ test('Does nothing when babel plugin not listed in .babelrc', (t) => {
     t.end();
 });
 
+test('Should resolve relative paths in the same directory', (t) => {
+    const oldCwd = process.cwd();
+    const fromFile = relativeToTestDir('lookup/submodule/lib/path.js');
+
+    process.chdir(relativeToTestDir('lookup/submodule/lib/'));
+
+    const actual = resolve('./other.js', fromFile, {});
+    const expected = expectResolvedTo('lookup/submodule/lib/other.js');
+
+    process.chdir(oldCwd);
+
+    t.deepEqual(actual, expected);
+    t.end();
+});
+
+test('Should resolve relative paths in the parent directory', (t) => {
+    const oldCwd = process.cwd();
+    const fromFile = relativeToTestDir('lookup/submodule/lib/path.js');
+
+    process.chdir(relativeToTestDir('lookup/submodule/lib/'));
+
+    const actual = resolve('../package.json', fromFile, {});
+    const expected = expectResolvedTo('lookup/submodule/package.json');
+
+    process.chdir(oldCwd);
+
+    t.deepEqual(actual, expected);
+    t.end();
+});
+
+test('Should resolve external dependencies', (t) => {
+    const oldCwd = process.cwd();
+    const fromFile = relativeToTestDir('lookup/submodule/lib/path.js');
+
+    process.chdir(relativeToTestDir('lookup/submodule/lib/'));
+
+    const actual = resolve('lodash', fromFile, {});
+    const expected = expectResolvedTo('../node_modules/lodash/lodash.js');
+
+    process.chdir(oldCwd);
+
+    t.deepEqual(actual, expected);
+    t.end();
+});
+
+test('Should resolve builtin core modules', (t) => {
+    const oldCwd = process.cwd();
+    const fromFile = relativeToTestDir('lookup/submodule/lib/path.js');
+
+    process.chdir(relativeToTestDir('lookup/submodule/lib/'));
+
+    const actual = resolve('path', fromFile, {});
+    const expected = { found: true, path: null };
+
+    process.chdir(oldCwd);
+
+    t.deepEqual(actual, expected);
+    t.end();
+});
+
 test('Should not resolve file that doesn\'t exists', (t) => {
     const prefix1 = resolve('@/nonexistent', __filename, {});
     const expected1 = expectResolvedTo(false);
