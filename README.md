@@ -1,5 +1,7 @@
 # eslint-import-resolver-babel-plugin-root-import
 
+## ⚠️ babel-plugin-root-import peer dependency bumped to 6.6.0 ⚠️
+
 A [babel-plugin-root-import] resolver for [eslint-plugin-import].
 
 This is a fork of [eslint-import-resolver-babel-root-import] that works with 
